@@ -6,11 +6,11 @@ var link = process.env.MONGOLAB_URI // if its local c9 'mongodb://localhost:2701
 var port = process.env.PORT || 8080;
 
 // app.use(express.static(__dirname + '/public'))
-app.get('/search/*',function(req,res){
-   var param = req.params[0]
-  // var ofset = req.query.offset
-var options = {
-  url: 'https://api.cognitive.microsoft.com/bing/v5.0/images/search?q='+param+'&count=30&mkt=en_us&safeSearch=Moderate',
+app.get('/api/imagesearch/:para',function(req,res){
+   var param = req.params['para']
+  var ofset = req.query['offset'] || 0 // shorthand for ternary check for undefined
+  var options = {
+  url: 'https://api.cognitive.microsoft.com/bing/v5.0/images/search?q='+param+'&count=30&offset='+ofset+'&mkt=en_us&safeSearch=Moderate',
   headers: {
     'User-Agent': 'request',
     'Ocp-Apim-Subscription-Key': '76784dbdc4cd408f8bede1ff03905d75',
@@ -25,9 +25,11 @@ request(options, function (error, response, body) {
     newObj["value"].forEach(function(el,i){
               ar.push(el)
             })
-    
-    res.send(ar)
-            }
+    var transfer = ar.map(function(a){
+      return ({"Text" : a.name, "Image URL" : a.thumbnailUrl , "Page URL": a.hostPageDisplayUrl})
+    })
+    res.send(transfer)
+        }
     })
 })
 
