@@ -6,7 +6,7 @@ var link = process.env.MONGOLAB_URI // if its local c9 'mongodb://localhost:2701
 var port = process.env.PORT || 8080;
 
 //Fetching most recent searches
-app.get('/api/imagesearch/latest',function(req,res){
+app.get('/api/latest/imagesearch',function(req,res){
   
   mongo.connect(link,function(err,db){
     if(err) throw (err)
