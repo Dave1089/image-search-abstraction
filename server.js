@@ -27,7 +27,7 @@ app.get('/api/imagesearch/:para',function(req,res){
    var param = req.params['para']
   var ofset = req.query['offset'] || 0 // shorthand for ternary check for undefined
   var options = {
-  url: 'https://api.cognitive.microsoft.com/bing/v5.0/images/search?q='+param+'&count=30&offset='+ofset+'&mkt=en_us&safeSearch=Moderate',
+  url: 'https://api.cognitive.microsoft.com/bing/v5.0/images/search?q='+param+'&count=10&offset='+ofset+'&mkt=en_us&safeSearch=Moderate',
   headers: {
     'User-Agent': 'request',
     'Ocp-Apim-Subscription-Key': '76784dbdc4cd408f8bede1ff03905d75',
